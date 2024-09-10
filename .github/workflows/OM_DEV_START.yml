@@ -1,0 +1,21 @@
+hosts: OM_DEV_START
+  connection:ssh
+  gather_facts:false
+  become:yes
+  serial:1
+  vars:
+    starting: start
+    http_port: 8080
+
+  tasks:
+    - name: Starting the Tomcat service
+      script: tomcat.py "{{ starting }}" "{{ url }}" "{{ http_port }}"
+      args:
+        executable: python3
+
+      register: start_output
+
+    - debug: var=start_output.stdout_lines
+
+      tags:
+        - Tomcat_Start
