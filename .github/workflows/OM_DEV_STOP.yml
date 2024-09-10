@@ -1,0 +1,35 @@
+---
+- hosts: OM_DEV_STOP
+  connection: ssh
+  become: yes
+  serial: 1
+  gather_facts: false
+  vars:
+          stopping: stop
+  tasks:
+          - name: stopping tomcat service
+            script: tomcat.py "{{ stopping }}"
+            args:
+                    executable: python3
+            
+            register: stop_output
+
+          - debug: var=stop_output.stdout_lines
+
+            tags:
+                - Tomcat_Stop    
+
+          - name: Working on deleting pega files after stop the tomcat service
+            script: delete_folder.py "{{ item }}"
+            args:
+                    executable: python3
+            with_items:
+                    - /pega/pegatemp/
+                    - /pega/tomcat/temp/
+
+            register: del_files
+
+          - debug:
+                  msg: "{{ del_files.results|map(attribute='stdout_lines')|list }}"
+
+

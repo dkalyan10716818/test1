@@ -1,0 +1,13 @@
+[OM_DEV_STOP:vars]
+ansible_ssh_user=krishna.v
+
+[OM_DEV_STOP]
+azl-pegadevap02 ansible_host=137.182.194.227 url=azl-pegadevap02.int.pg.com
+azl-pegadevap01 ansible_host=137.182.194.226 url=azl-pegadevap01.int.pg.com
+
+[OM_DEV_START:vars]
+ansible_ssh_user=krishna.v
+
+[OM_DEV_START]
+azl-pegadevap01 ansible_host=137.182.194.226 url=azl-pegadevap01.int.pg.com
+azl-pegadevap02 ansible_host=137.182.194.227 url=azl-pegadevap02.int.pg.com
